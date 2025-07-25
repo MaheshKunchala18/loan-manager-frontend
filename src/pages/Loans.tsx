@@ -24,11 +24,9 @@ const Loans: React.FC = () => {
     try {
       setLoading(true);
       if (isVerifier || isAdmin) {
-        // Fetch all loans for verifiers and admins
         const response = await apiCall.get<{ applications: LoanApplication[] }>('/loans');
         setLoans(response.data.applications);
       } else {
-        // Fetch user's own loans
         const response = await apiCall.get<{ applications: LoanApplication[] }>('/loans/my-applications');
         setLoans(response.data.applications);
       }
@@ -39,35 +37,32 @@ const Loans: React.FC = () => {
     }
   };
 
-  // Handle verify action
   const handleVerify = async (applicationId: string) => {
     try {
       await apiCall.put(`/loans/${applicationId}/verify`, {
         action: 'verify'
       });
       toast.success('Application verified successfully!');
-      fetchLoans(); // Refresh the loans list
+      fetchLoans();
     } catch (error) {
       console.error('Error verifying application:', error);
       toast.error('Failed to verify application');
     }
   };
 
-  // Handle approve action
   const handleApprove = async (applicationId: string) => {
     try {
       await apiCall.put(`/loans/${applicationId}/approve`, {
         action: 'approve'
       });
       toast.success('Application approved successfully!');
-      fetchLoans(); // Refresh the loans list
+      fetchLoans();
     } catch (error) {
       console.error('Error approving application:', error);
       toast.error('Failed to approve application');
     }
   };
 
-  // Handle reject action
   const handleReject = async (applicationId: string, isApproval = false) => {
     try {
       const endpoint = isApproval ? `/loans/${applicationId}/approve` : `/loans/${applicationId}/verify`;
@@ -75,7 +70,7 @@ const Loans: React.FC = () => {
         action: 'reject'
       });
       toast.success('Application rejected successfully!');
-      fetchLoans(); // Refresh the loans list
+      fetchLoans();
     } catch (error) {
       console.error('Error rejecting application:', error);
       toast.error('Failed to reject application');
@@ -110,7 +105,6 @@ const Loans: React.FC = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
@@ -130,7 +124,6 @@ const Loans: React.FC = () => {
         </div>
       </div>
 
-      {/* Balance Card */}
       <Card className="bg-gradient-to-r from-green-50 to-green-100">
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
@@ -158,7 +151,6 @@ const Loans: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Search and Filters */}
       <div className="flex items-center justify-between">
         <div className="relative">
           <Search className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -182,7 +174,6 @@ const Loans: React.FC = () => {
         </div>
       </div>
 
-      {/* Applied Loans Table */}
       <Card>
         <CardContent className="p-6">
           <h2 className="text-xl font-semibold mb-4">Applied Loans</h2>

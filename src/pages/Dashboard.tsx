@@ -27,14 +27,12 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Fetch dashboard data function
   const fetchDashboardData = useCallback(async (showRefreshToast = false) => {
     try {
       if (showRefreshToast) setRefreshing(true);
       if (!showRefreshToast) setLoading(true);
       
       if (isVerifier || isAdmin) {
-        // Fetch admin/verifier dashboard data
         const [statsResponse, recentLoansResponse] = await Promise.all([
           apiCall.get<{ stats: DashboardStats }>('/dashboard/stats'),
           apiCall.get<{ recentLoans: LoanApplication[] }>('/dashboard/recent-loans?limit=5')
@@ -43,16 +41,14 @@ const Dashboard: React.FC = () => {
         setStats(statsResponse.data.stats);
         setRecentLoans(recentLoansResponse.data.recentLoans);
       } else {
-        // Fetch user-specific dashboard data
         const userDashboard = await apiCall.get<any>('/dashboard/user');
-        // Convert user stats to match DashboardStats interface
         const userStats = userDashboard.data.userStats;
         setStats({
           totalUsers: 1,
           totalBorrowers: 1,
           totalLoans: userStats.totalApplications,
           cashDisbursed: userStats.totalApprovedAmount,
-          cashReceived: userStats.totalApprovedAmount * 1.15, // Simulated
+          cashReceived: userStats.totalApprovedAmount * 1.15,
           savings: userStats.totalApprovedAmount * 0.8,
           repaidLoans: userStats.approvedApplications,
           otherAccounts: 1,
@@ -81,23 +77,20 @@ const Dashboard: React.FC = () => {
     }
   }, [isVerifier, isAdmin]);
 
-  // Initial data fetch
   useEffect(() => {
     fetchDashboardData();
   }, [fetchDashboardData]);
 
-  // Auto-refresh every 30 seconds for admin/verifier dashboards
   useEffect(() => {
     if (!isAdmin && !isVerifier) return;
 
     const interval = setInterval(() => {
       fetchDashboardData();
-    }, 30000); // Refresh every 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [fetchDashboardData, isAdmin, isVerifier]);
 
-  // Manual refresh function
   const handleRefresh = () => {
     fetchDashboardData(true);
   };
@@ -124,7 +117,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="p-6 space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">{getDashboardTitle()}</h1>
@@ -154,10 +146,8 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Row 1 */}
           <StatCard
             title="Active Users"
             value={stats.totalUsers}
@@ -187,7 +177,6 @@ const Dashboard: React.FC = () => {
             iconBgColor="bg-green-500"
           />
 
-          {/* Row 2 */}
           <StatCard
             title="Savings"
             value={stats.savings}
@@ -219,7 +208,6 @@ const Dashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Recent Loans Table */}
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">

@@ -39,14 +39,12 @@ const LoanApplication: React.FC = () => {
   return (
     <div className="p-6">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Apply for a Loan</h1>
           <p className="text-gray-600">Fill out the form below to submit your loan application</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Form */}
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
@@ -70,7 +68,6 @@ const LoanApplication: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  {/* Personal Information */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
                       label="First name of applicant"
@@ -164,57 +161,87 @@ const LoanApplication: React.FC = () => {
                   />
 
                   {errors.root && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                      <p className="text-sm text-red-600">{errors.root.message}</p>
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-600 text-sm">{errors.root.message}</p>
                     </div>
                   )}
 
-                  <Button
-                    type="submit"
-                    loading={loading}
-                    className="w-full bg-green-600 hover:bg-green-700"
-                    size="lg"
-                  >
-                    Submit
-                  </Button>
+                  <div className="flex space-x-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => navigate('/loans')}
+                      className="flex-1"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      loading={loading}
+                      className="flex-1 bg-green-600 hover:bg-green-700"
+                    >
+                      Submit Application
+                    </Button>
+                  </div>
                 </form>
               </CardContent>
             </Card>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Chart placeholder */}
             <Card>
-              <CardContent className="p-4">
-                <h3 className="text-sm font-medium text-gray-600 mb-4">Chart</h3>
-                <div className="h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-gray-500">
-                    <p className="text-xs">Loan statistics will be</p>
-                    <p className="text-xs">displayed here</p>
+              <CardHeader>
+                <h3 className="text-lg font-semibold">Loan Information</h3>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-sm text-gray-600">Interest Rate</p>
+                    <p className="text-lg font-semibold">12% - 18% per annum</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Processing Time</p>
+                    <p className="text-lg font-semibold">2-5 business days</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Minimum Amount</p>
+                    <p className="text-lg font-semibold">₹1,000</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-600">Maximum Amount</p>
+                    <p className="text-lg font-semibold">₹10,00,000</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Information */}
             <Card>
-              <CardContent className="p-4">
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-sm text-gray-600">
-                      Any personal and credit information presented will be used to 
-                      ascertain the decisions from our lines and will be released to them along with the 
-                      information of a call requesting background.
-                    </p>
-                  </div>
-                  <div className="flex justify-center">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-gray-900">3</div>
-                      <div className="text-xs text-gray-500">STEPS TO APPLY</div>
-                    </div>
-                  </div>
-                </div>
+              <CardHeader>
+                <h3 className="text-lg font-semibold">Required Documents</h3>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>• Valid ID proof (Aadhar/PAN/Passport)</li>
+                  <li>• Address proof</li>
+                  <li>• Income proof (Salary slips/ITR)</li>
+                  <li>• Bank statements (3 months)</li>
+                  <li>• Employment verification</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <h3 className="text-lg font-semibold">Why Choose CreditSea?</h3>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>• Quick approval process</li>
+                  <li>• Competitive interest rates</li>
+                  <li>• Flexible repayment options</li>
+                  <li>• No hidden charges</li>
+                  <li>• 24/7 customer support</li>
+                </ul>
               </CardContent>
             </Card>
           </div>

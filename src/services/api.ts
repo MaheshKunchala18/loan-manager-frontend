@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { toast } from 'react-hot-toast';
 
-// API Configuration from environment variables
 const API_CONFIG = {
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
   timeout: 10000,
@@ -10,10 +9,8 @@ const API_CONFIG = {
   },
 };
 
-// Create axios instance
 const api: AxiosInstance = axios.create(API_CONFIG);
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -21,7 +18,6 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     
-    // Add app info to headers if available
     if (import.meta.env.VITE_APP_NAME) {
       config.headers['X-App-Name'] = import.meta.env.VITE_APP_NAME;
     }
@@ -36,7 +32,6 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor for error handling
 api.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
@@ -47,7 +42,6 @@ api.interceptors.response.use(
       
       switch (status) {
         case 401:
-          // Unauthorized - remove token and redirect to login
           localStorage.removeItem('token');
           localStorage.removeItem('user');
           if (window.location.pathname !== '/login') {
@@ -77,7 +71,6 @@ api.interceptors.response.use(
   }
 );
 
-// API helper functions
 export const apiCall = {
   get: <T>(url: string, params?: any) => api.get<T>(url, { params }),
   post: <T>(url: string, data?: any) => api.post<T>(url, data),
@@ -85,7 +78,6 @@ export const apiCall = {
   delete: <T>(url: string) => api.delete<T>(url),
 };
 
-// Export API configuration for debugging
 export const getApiConfig = () => ({
   baseURL: API_CONFIG.baseURL,
   environment: import.meta.env.VITE_NODE_ENV || 'development',
