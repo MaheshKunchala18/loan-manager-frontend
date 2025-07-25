@@ -17,7 +17,7 @@ import { cn } from '@/utils/cn';
 import Button from '@/components/ui/Button';
 
 const DashboardLayout: React.FC = () => {
-  const { user, logout, isAdmin, isVerifier } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);

@@ -1,20 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { apiCall } from '@/services/api';
-import { DashboardStats, MonthlyMetric, LoanApplication } from '@/types';
+import { DashboardStats, LoanApplication } from '@/types';
 import StatCard from '@/components/ui/StatCard';
 import { Card, CardHeader, CardContent } from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
 import { 
   Users, 
-  DollarSign, 
   FileText, 
   TrendingUp,
   Banknote,
   PiggyBank,
   Building,
-  CreditCard,
-  RefreshCw
+  RefreshCw,
+  CreditCard
 } from 'lucide-react';
 import { formatCurrency, formatDate, capitalize } from '@/utils/format';
 import Button from '@/components/ui/Button';

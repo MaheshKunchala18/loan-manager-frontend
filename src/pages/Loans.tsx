@@ -11,7 +11,7 @@ import { formatCurrency, formatDate, capitalize } from '@/utils/format';
 import { toast } from 'react-hot-toast';
 
 const Loans: React.FC = () => {
-  const { user, isVerifier, isAdmin } = useAuth();
+  const { isVerifier, isAdmin } = useAuth();
   const [loans, setLoans] = useState<LoanApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');

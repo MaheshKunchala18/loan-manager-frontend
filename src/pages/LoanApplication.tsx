@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '@/context/AuthContext';
 import { apiCall } from '@/services/api';
 import { LoanApplicationForm } from '@/types';
 import Input from '@/components/ui/Input';
@@ -11,7 +10,6 @@ import { toast } from 'react-hot-toast';
 
 const LoanApplication: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const {
